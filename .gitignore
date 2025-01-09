@@ -1,0 +1,23 @@
+# Veritabanı bağlantı bilgilerini içeren .env dosyasını yoksay
+.env
+/server/.env
+/client/.env
+
+# Account File
+server/account-file.json
+# Derleme sonuçlarını (genellikle "node_modules/" veya "vendor/" dizinleri) yoksay
+node_modules/
+server/node_modules/
+client/node_modules/
+vendor/
+
+# IDE veya metin düzenleyici özel dosyalarını yoksay
+.idea/
+.vscode/
+
+# Log dosyalarını yoksay
+*.log
+
+# Geçici dosyaları yoksay
+*.tmp
+*.temp
