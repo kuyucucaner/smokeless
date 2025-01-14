@@ -1,26 +1,32 @@
 const db = require('../config/db');
 
 const UserModel = {
-    findByEmail : async (email) => {
-        try{
-            const sql = await db.query("SELECT * FROM users WHERE email = ?", [email]);
-            return sql ; 
-        }
-        catch(err){
-            throw err; // Hata meydana gelirse fırlat
+    findByEmail: async (email) => {
+        try {
+            console.log("Email being searched:", email); // Debugging
+            const [rows] = await db.query("SELECT * FROM users WHERE email = ?", {
+                replacements: [email], // Pass the email as an array in replacements
+                type: db.QueryTypes.SELECT, // Ensures the result is properly handled as a SELECT query
+            });
+            return rows;
+        } catch (err) {
+            console.error("Error in findByEmail:", err);
+            throw err; // Rethrow the error for higher-level handling
         }
     },
-    createUser : async (user) => {
+    createUser: async (user) => {
         try {
-
-            const sql = await db.query(
+            const [result] = await db.query(
                 "INSERT INTO users (firstName, email, password) VALUES (?, ?, ?)",
-                [user.firstName, user.email, user.password]
-              );
-              return sql;
-        }
-        catch(err){
-            throw err; // Hata meydana gelirse fırlat
+                {
+                    replacements: [user.firstName, user.email, user.password], // Safe way to insert variables
+                    type: db.QueryTypes.INSERT, // Ensures the query type is INSERT
+                }
+            );
+            return result;
+        } catch (err) {
+            console.error("Error in createUser:", err);
+            throw err;
         }
     },
 };
