@@ -2,9 +2,15 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/user-model");
 require("dotenv").config();
+const { check , validationResult } = require('express-validator');
 
 const UserController = {
   registerUser: async function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
       const { firstName, email, password } = req.body;
 
