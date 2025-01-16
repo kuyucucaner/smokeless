@@ -31,7 +31,21 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
-
+export const setQuitDate = createAsyncThunk(
+  "auth/setQuitDate",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/api/v1/user/set-quit-date",
+        userData,
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 export const userSlice = createSlice({
   name: "auth",
   initialState: { user: null, error: null, loading: false },
@@ -57,6 +71,17 @@ export const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(setQuitDate.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(setQuitDate.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(setQuitDate.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

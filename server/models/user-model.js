@@ -29,6 +29,21 @@ const UserModel = {
             throw err;
         }
     },
+    quitDate: async (user) => {
+        try {
+            console.log("Quit date: ", user.quit_date);
+            const [result] = await db.query("UPDATE users SET quit_date = ? WHERE user_id = ?" , {
+                replacements :  [user.quit_date , user.user_id ],
+                type: db.QueryTypes.UPDATE, // Ensures the query type is UPDATE
+            });
+            return result;
+        }
+        catch( error){
+            console.error("Error in quitDate:", error);
+            throw error;
+        }
+    },
+
 };
 
 module.exports = UserModel;

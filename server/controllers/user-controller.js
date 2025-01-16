@@ -61,6 +61,22 @@ const UserController = {
       return res.status(500).json({ message: "Server Error!" });
     }
   },
+  setQuitDate: async function (req , res)  {
+      const { quitDate } = req.body;
+      console.log("req user : ",req.user);
+      const userId = req.user.id;
+      if (!quitDate || !userId) {
+        return res.status(400).json({ message: "Quit date and user ID are required!" });
+      }
+   try {
+     await UserModel.quitDate({ quit_date: quitDate, user_id: userId });
+      return res.status(200).json({ message: "Date updated successfully!" });
+   }
+   catch(error){
+    console.log(error);
+    return res.status(500).json({ message: "Server Error!" });
+   }
+  },
 };
 
 module.exports = UserController;
