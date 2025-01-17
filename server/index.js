@@ -4,6 +4,7 @@ const sequelize = require("./config/db");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const userRoutes = require("./routes/user-routes");
+const dailyMarkRoutes = require('./routes/daily-mark.routes');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/daily-mark", dailyMarkRoutes);
 
 app.get('/', (req, res) => {
     res.send('Welcome to the API');
