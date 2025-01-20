@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
 import LoginPage from './pages/login';
 import RegisterPage from './pages/register';
+import StatsPage from './pages/stats';
 import DailyMarkPage from './pages/daily-mark';
 import QuitDateComponents from './components/quit-date';
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/register" element={< RegisterPage />} />
           <Route path="/quit-date" element={< QuitDateComponents />} />
           <Route path="/daily-mark" element={< DailyMarkPage />} />
+          <Route path="/stats" element={< StatsPage />} />
         </Routes>
       </div>
     </Router>

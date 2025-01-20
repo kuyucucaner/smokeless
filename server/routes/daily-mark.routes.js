@@ -7,4 +7,6 @@ router.post('/add-or-update-mark' , AuthenticateToken , DailyMarkController.addO
 
 router.get('/get-marks' , AuthenticateToken , DailyMarkController.getMarks);
 
+router.put('/calculate-stats', AuthenticateToken , DailyMarkController.calculateStats);
+
 module.exports = router;

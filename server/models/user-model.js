@@ -43,7 +43,35 @@ const UserModel = {
             throw error;
         }
     },
+    addCigarettesPerDay : async (user) => {
+        try {
+            // Geçerli bir sayıya dönüştürme (veya NaN olursa 0 olarak kabul etme)
+            const cigarettesPerDay = parseInt(user.cigarettes_per_day);
+            console.log("user:", user);
 
+          // Eğer sayı değilse, 0 olarak kabul et
+          if (isNaN(cigarettesPerDay) || cigarettesPerDay <= 1) {
+            throw new Error("Invalid value for cigarettes_per_day. Must be a positive number.");
+        }
+    
+            console.log("Cigarettes Per Day:", cigarettesPerDay);
+    
+            // Veritabanı güncelleme sorgusu
+            const [result] = await db.query(
+                "UPDATE users SET cigarettes_per_day = ? WHERE user_id = ?",
+                {
+                    replacements: [cigarettesPerDay, user.user_id],
+                    type: db.QueryTypes.UPDATE,
+                }
+            );
+    
+            return result;
+        } catch (error) {
+            console.error("Error in addCigarettesPerDay:", error);
+            throw error;
+        }
+    },
+    
 };
 
 module.exports = UserModel;

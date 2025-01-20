@@ -1,4 +1,5 @@
 const DailyMarkModel = require('../models/daily-mark-model');
+const UserModel = require('../models/user-model');
 
 const DailyMarkController = {
         addOrUpdateMark : async function ( req, res) {
@@ -27,7 +28,50 @@ const DailyMarkController = {
                 console.log(err);
                 return res.status(500).json({ message : 'Server Error' });
             }
-        }
+        },
+        calculateStats : async function (req, res) {
+            const userId = req.user.id;
+            const avarageCigarettePrice = 90;
+            const cigarettesPerPack = 20; // Bir paketteki sigara sayısı
+            const {cigarettesPerDay} = req.body.cigarettesPerDay;
+            console.log("req body" , cigarettesPerDay);
+            if(!cigarettesPerDay){
+                return res.status(400).json({ message : 'Cigarettes per day are required' });
+            }
+            try {
+                const marks = await DailyMarkModel.getMarks(userId);
+                console.log("Marks:", marks); // Gelen veriyi kontrol edin
+
+                const nonSmokingDays = marks.filter((mark) => mark.is_marked === 1).length;
+                console.log("nonSmokingDays:", nonSmokingDays); // Gelen veriyi kontrol edin
+
+               const updateUser =  await UserModel.addCigarettesPerDay({ cigarettes_per_day : cigarettesPerDay , user_id : userId });
+               console.log("updateUser:", updateUser); // Gelen veriyi kontrol edin
+
+                 const cigarettePricePerUnit = avarageCigarettePrice / cigarettesPerPack; // Sigara başına fiyat
+                 console.log("cigarettePricePerUnit:", cigarettePricePerUnit); // Gelen veriyi kontrol edin
+
+                 const savedMoney = nonSmokingDays * cigarettesPerDay * cigarettePricePerUnit;
+                 console.log("savedMoney:", savedMoney); // Gelen veriyi kontrol edin
+
+                const healthBenefits = {
+                    improvedLungCapacity : `${nonSmokingDays * 2}%`,
+                    reducedHeartAttackRisk : `${nonSmokingDays * 1.5}%`,
+                    otherHealthRisks : "Reduced risk of cancer, improved overall health.",
+                };
+                console.log("healthBenefits:", healthBenefits); // Gelen veriyi kontrol edin
+
+                return res.status(200).json({
+                    nonSmokingDays,
+                    savedMoney,
+                    healthBenefits,
+                 });
+            }
+            catch (err){
+                console.log(err);
+                return res.status(500).json({ message : 'Server Error' });
+            }
+        },
 };
 
 module.exports = DailyMarkController;

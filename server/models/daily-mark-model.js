@@ -17,7 +17,7 @@ const DailyMarkModel = {
   },
   getMarks : async (user_id) => {
     try{
-        const [rows] = await db.query('SELECT * FROM daily_marks WHERE user_id = ? ORDER BY date ASC', {
+        const rows = await db.query('SELECT * FROM daily_marks WHERE user_id = ? ORDER BY date ASC', {
             replacements : [user_id],
             type: db.QueryTypes.SELECT, // Ensures the query type is SELECT
         })
