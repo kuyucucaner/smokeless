@@ -9,4 +9,6 @@ router.get('/get-marks' , AuthenticateToken , DailyMarkController.getMarks);
 
 router.put('/calculate-stats', AuthenticateToken , DailyMarkController.calculateStats);
 
+router.post('/set-goal', AuthenticateToken , DailyMarkController.setGoal);
+
 module.exports = router;

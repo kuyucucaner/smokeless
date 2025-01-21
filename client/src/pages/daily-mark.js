@@ -27,11 +27,11 @@ const DailyMark = () => {
 
         <h4>Mark days : </h4>
         <ul>
-            {marks.map((mark, index ) => (
+            {/* {marks.map((mark, index ) => (
                 <li key={index}>
                     {mark.date} - {mark.is_marked ? "Marked" : "Not Marked"};
                 </li>
-            ))}
+            ))} */}
         </ul>
     </div>
   )

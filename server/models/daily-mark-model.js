@@ -27,7 +27,23 @@ const DailyMarkModel = {
         console.error("Error in getMarks:", error);
         throw error;
     }
-  }
+  },
+  setGoal: async ({user_id , target_days}) => {
+    try {
+        const [results] = await db.query(
+            'INSERT INTO goals (user_id , target_days) VALUES (?, ?) ON DUPLICATE KEY UPDATE target_days = ?', 
+            {
+                replacements : [user_id, target_days, target_days],
+                type: db.QueryTypes.INSERT, // Ensures the query type is INSERT
+            }
+        );
+        return results;
+    } catch (error) {
+        console.error("Error in setGoal:", error);
+        throw error;
+    }
+}
+
 };
 
 module.exports = DailyMarkModel;

@@ -50,11 +50,29 @@ export const calculateStats = createAsyncThunk(
     }
   }
 );
+export const setGoal = createAsyncThunk(
+  "mark/setGoal",
+   async(targetDays , {rejectWithValue}) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/daily-mark/set-goal",
+         targetDays , // Veriyi obje olarak gönderiyoruz
+        { withCredentials: true } // Cookie-based authentication
+      );
+      return response.data; // API'den dönen veriyi direkt al
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "An unexpected error occurred"
+      );
+    }
+   }
+);
 
 const dailyMarksSlice = createSlice({
   name: "dailyMarks",
   initialState: {
     marks: [],
+    targetDays : null, //
     error: null,
     loading: false,
     stats: {
@@ -100,6 +118,18 @@ const dailyMarksSlice = createSlice({
         state.stats = action.payload;
       })
       .addCase(calculateStats.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload; // Hata durumunu state'e kaydet
+      })
+      .addCase(setGoal.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(setGoal.fulfilled, (state, action) => {
+        state.loading = false;
+        state.targetDays = action.payload; // Gelen değeri direkt ata
+      })
+      
+      .addCase(setGoal.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload; // Hata durumunu state'e kaydet
       });

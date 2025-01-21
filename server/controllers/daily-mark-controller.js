@@ -72,6 +72,26 @@ const DailyMarkController = {
                 return res.status(500).json({ message : 'Server Error' });
             }
         },
+        setGoal : async function (req, res) {
+            const { targetDays } = req.body;
+            const userId = req.user.id;
+            console.log("targetDays:", targetDays); // Gelen veriyi kontrol edin
+            console.log("userId:", userId); // Gelen veriyi kontrol edin
+
+            if (!targetDays || targetDays <= 0) {
+                return res.status(400).json({ message: "Target days must be greater than 0" });
+              }
+
+              try {
+                const goal = await DailyMarkModel.setGoal({ user_id : userId, target_days : targetDays });
+                console.log("goal:", goal); // Gelen veriyi kontrol edin
+                return res.status(200).json({ message: "Goal set successfully" });
+              }
+              catch (err) {
+                console.log(err);
+                return res.status(500).json({ message: "Server Error!" });
+              }
+        },
 };
 
 module.exports = DailyMarkController;
