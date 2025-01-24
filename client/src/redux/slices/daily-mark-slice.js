@@ -52,11 +52,11 @@ export const calculateStats = createAsyncThunk(
 );
 export const setGoal = createAsyncThunk(
   "mark/setGoal",
-   async(targetDays , {rejectWithValue}) => {
+  async (targetDays, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/v1/daily-mark/set-goal",
-         targetDays , // Veriyi obje olarak gönderiyoruz
+        targetDays, // Veriyi obje olarak gönderiyoruz
         { withCredentials: true } // Cookie-based authentication
       );
       return response.data; // API'den dönen veriyi direkt al
@@ -65,15 +65,31 @@ export const setGoal = createAsyncThunk(
         error.response?.data || "An unexpected error occurred"
       );
     }
-   }
+  }
+);
+export const checkProgress = createAsyncThunk(
+  "mark/checkProgress",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/v1/daily-mark/check-progress",
+        { withCredentials: true } // Cookie-based authentication
+      );
+      console.log("Response : ", response.data);
+      return response.data; // API'den dönen veriyi direkt al
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
 );
 
 const dailyMarksSlice = createSlice({
   name: "dailyMarks",
   initialState: {
     marks: [],
-    targetDays : null, //
+    targetDays: null, //
     error: null,
+    progress: [],
     loading: false,
     stats: {
       nonSmokingDays: 0,
@@ -128,8 +144,19 @@ const dailyMarksSlice = createSlice({
         state.loading = false;
         state.targetDays = action.payload; // Gelen değeri direkt ata
       })
-      
+
       .addCase(setGoal.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload; // Hata durumunu state'e kaydet
+      })
+      .addCase(checkProgress.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(checkProgress.fulfilled, (state, action) => {
+        state.loading = false;
+        state.progress = action.payload;
+      })
+      .addCase(checkProgress.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload; // Hata durumunu state'e kaydet
       });

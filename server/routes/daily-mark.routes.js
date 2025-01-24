@@ -11,4 +11,6 @@ router.put('/calculate-stats', AuthenticateToken , DailyMarkController.calculate
 
 router.post('/set-goal', AuthenticateToken , DailyMarkController.setGoal);
 
+router.get('/check-progress', AuthenticateToken , DailyMarkController.checkProgress);
+
 module.exports = router;
