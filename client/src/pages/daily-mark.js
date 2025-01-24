@@ -10,7 +10,7 @@ const DailyMark = () => {
   useEffect(() => {
     dispatch(getMarks());
   },[dispatch]);
-
+  
   const handleMarkDay = () => {
     if (!selectedDate) return;
     dispatch(addOrUpdateMark({ date: selectedDate }));

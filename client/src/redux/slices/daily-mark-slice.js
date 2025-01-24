@@ -10,6 +10,7 @@ export const addOrUpdateMark = createAsyncThunk(
         date,
         { withCredentials: true }
       );
+      console.log("RESPONSE DATA ADD OR UPDATE",response.data)
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -87,7 +88,7 @@ const dailyMarksSlice = createSlice({
   name: "dailyMarks",
   initialState: {
     marks: [],
-    targetDays: null, //
+    targetDays: null, 
     error: null,
     progress: [],
     loading: false,
@@ -109,7 +110,7 @@ const dailyMarksSlice = createSlice({
       })
       .addCase(addOrUpdateMark.fulfilled, (state, action) => {
         state.loading = false;
-        state.marks.push(action.payload);
+        state.marks = action.payload;
       })
       .addCase(addOrUpdateMark.rejected, (state, action) => {
         state.loading = false;

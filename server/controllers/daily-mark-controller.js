@@ -10,10 +10,12 @@ const DailyMarkController = {
       return res.status(400).json({ message: "Date is required" });
     }
     try {
-      await DailyMarkModel.addOrUpdateMark({ user_id: userId, date: date });
-      return res
-        .status(200)
-        .json({ message: "Mark added or updated successfully" });
+     const newMark =  await DailyMarkModel.addOrUpdateMark({ user_id: userId, date: date });
+     return res.status(200).json({
+      success: true,
+      message: 'Mark added or updated successfully',
+      newMark, // Veritabanından gelen sonuç
+    });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ message: "Server Error" });
