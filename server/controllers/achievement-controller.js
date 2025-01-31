@@ -19,7 +19,7 @@ const AchievementController = {
         userAchievementIds.includes(achievement.achievement_id)
       );
       if (matchAchievements.length > 0) {
-        return res.status(200).json(matchAchievements);
+        return res.status(200).json({matchAchievements});
       } else {
         return res.status(200).json({ message: "Başarım kazanılmadı!" });
       } 
@@ -29,12 +29,12 @@ const AchievementController = {
     }
   },
   getMotivationMessage: async function (req, res) {
-    const { day } = req.params;
-    if (!day) {
-      return res.status(400).json({ message: "Day parameter is required" });
+    const userId = req.user.id;
+    if (!userId) {
+      return res.status(400).json({ message: "UserID parameter is required" });
     }
     try {
-      const message = await AchievementModel.getDailyMessage(day);
+      const message = await AchievementModel.getDailyMessage(userId);
       if (!message) {
         return res.status(404).json({ message: "No motivation message found" });
       }

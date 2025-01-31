@@ -39,20 +39,21 @@ const AchievementModel = {
           type: db.QueryTypes.SELECT,
         }
       );
- 
-      return { consecutiveDays  , userAchievements , achievements};
-      }
- catch (error) {
+
+      return { consecutiveDays, userAchievements, achievements };
+    } catch (error) {
       console.error("Error in checkAchievement:", error);
       throw error;
     }
   },
-  getDailyMessage: async (day) => {
+  getDailyMessage: async (user_id) => {
     try {
+      const consecutiveDays = await AchievementModel.getConsecutiveDays(user_id);
+
       const message = await db.query(
         "SELECT message FROM daily_messages WHERE day = ? ",
         {
-          replacements: [day],
+          replacements: [consecutiveDays],
           type: db.QueryTypes.SELECT, // Ensures the query type is SELECT
         }
       );

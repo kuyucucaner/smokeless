@@ -18,10 +18,12 @@ export const checkAchievements = createAsyncThunk(
 );
 export const getMotivationMessage = createAsyncThunk(
   "succes/getMotivationMessage",
-  async (day, { rejectWithValue }) => {
+  async (user_id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/v1/achievement/motivation/${day}`
+      const response = await axios.post(
+        `http://localhost:5000/api/v1/achievement/motivation-message`, 
+        user_id,
+        { withCredentials: true }
       );
       return response.data;
     } catch (error) {
@@ -57,9 +59,10 @@ export const successSlice = createSlice({
       })
       .addCase(getMotivationMessage.fulfilled, (state, action) => {
         state.loading = false;
-        state.motivationMessage = action.payload;
+        state.motivationMessage = action.payload.message; // ❌ action.payload yerine action.payload.message kullanılmalı
         state.error = null;
       })
+      
       .addCase(getMotivationMessage.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;

@@ -8,10 +8,10 @@ router.post(
   AchievementController.checkAchievements
 );
 
-// router.get(
-//   "/motivation/:day",
-//   AuthenticateToken,
-//   AchievementController.getMotivationMessage
-// );
+ router.post(
+   "/motivation-message",
+  AuthenticateToken,
+   AchievementController.getMotivationMessage
+ );
 
 module.exports = router;
