@@ -44,6 +44,20 @@ const AchievementController = {
       return res.status(500).json({ message: "Server Error" });
     }
   },
+  getSuggestion : async function ( req, res) {
+    try {
+      const suggestion = await AchievementModel.getSuggestion();
+      if (!suggestion) {
+        return res.status(404).json({ message: "No suggestion found" });
+      }
+      return res.status(200).json({ suggestion });
+    }
+    catch(err) {
+      console.log(err);
+      return res.status(500).json({ message: "Server Error!" });
+    }
+
+  },
 };
 
 module.exports = AchievementController;

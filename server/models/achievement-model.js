@@ -63,6 +63,18 @@ const AchievementModel = {
       throw error;
     }
   },
+  getSuggestion : async() => {
+    try {
+      const [suggestion] = await db.query("SELECT * FROM suggestions ORDER BY RAND() LIMIT 1" , 
+        { type: db.QueryTypes.SELECT }
+      );
+      return suggestion;
+    }
+    catch (error) {
+      console.error("Error in getSuggestion:", error);
+      throw error;
+    }
+  }
 };
 
 module.exports = AchievementModel;

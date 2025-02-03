@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkAchievements , getMotivationMessage } from '../redux/slices/success-slice';
+import { checkAchievements , getMotivationMessage , getSuggestion } from '../redux/slices/success-slice';
 
 const Achievement = () => {
     const dispatch = useDispatch();
-    const { achievements,motivationMessage , loading, error } = useSelector((state) => state.success);
+    const { achievements,motivationMessage , suggestion , loading, error } = useSelector((state) => state.success);
 
     useEffect(() => {
         dispatch(checkAchievements());
         dispatch(getMotivationMessage());
+        dispatch(getSuggestion());
     }, [dispatch]);
 
 
@@ -33,6 +34,8 @@ const Achievement = () => {
 
             <h2>Günün Motivasyon Mesajı</h2>
             {motivationMessage ? <p>{motivationMessage}</p> : <p>Mesaj yükleniyor...</p>}
+            <h2>Öneriler</h2>
+            {suggestion ?  <p>{suggestion.suggestion}</p> : <p>Öneri Yükleniyors</p>}
             </div>
     );
 };

@@ -21,11 +21,25 @@ export const getMotivationMessage = createAsyncThunk(
   async (user_id, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/v1/achievement/motivation-message`, 
+        `http://localhost:5000/api/v1/achievement/motivation-message`,
         user_id,
         { withCredentials: true }
       );
       return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const getSuggestion = createAsyncThunk(
+  "succes/getSuggestion",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/v1/achievement/suggestion",
+        { withCredentials: true }
+      );
+      return response.data.suggestion;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -36,6 +50,7 @@ export const successSlice = createSlice({
   initialState: {
     achievements: [],
     motivationMessage: "",
+    suggestion: "",
     loading: false,
     error: null,
   },
@@ -62,11 +77,22 @@ export const successSlice = createSlice({
         state.motivationMessage = action.payload.message; // ❌ action.payload yerine action.payload.message kullanılmalı
         state.error = null;
       })
-      
       .addCase(getMotivationMessage.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(getSuggestion.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getSuggestion.fulfilled, (state, action) => {
+        state.loading = false;
+        state.suggestion = action.payload;
+        state.error = null;
+      })
+      .addCase(getSuggestion.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 
