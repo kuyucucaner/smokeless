@@ -4,6 +4,8 @@ const StoryController = {
     addStory : async function ( req,res)  {
         const userId = req.user.id;
         const { story_text } = req.body;
+        console.log("User ID:", userId); // Log the user ID
+        console.log("Story Text:", story_text); // Log the story text
         if(!story_text || !userId) {
             return res.status(400).json({ message: 'Story text and user ID are required!' });
         }
