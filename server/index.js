@@ -7,6 +7,7 @@ const userRoutes = require("./routes/user-routes");
 const dailyMarkRoutes = require('./routes/daily-mark.routes');
 const achievementRoutes = require('./routes/achievement-routes');
 const storyRoutes = require('./routes/story-routes');
+const friendshipRoutes = require('./routes/friendship-routes');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/daily-mark", dailyMarkRoutes);
 app.use("/api/v1/achievement", achievementRoutes);
 app.use("/api/v1/story", storyRoutes);
+app.use("/api/v1/friendship", friendshipRoutes);
 
 app.get('/', (req, res) => {
     res.send('Welcome to the API');
