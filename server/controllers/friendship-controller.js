@@ -27,7 +27,7 @@ const FriendshipController = {
         try {
             const friendships = await FriendshipModel.getUserFriendships({ user_id: userId });
             console.log('Friendships:', friendships);
-            return res.status(200).json({ friendships });
+            return res.status(200).json({ friendships:  friendships });
         }
         catch(err) {
             console.log(err);

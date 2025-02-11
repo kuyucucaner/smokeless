@@ -16,7 +16,7 @@ const FriendshipModel = {
     },
     getUserFriendships : async({user_id}) => {
         try {
-            const [response] = await db.query("SELECT user_id, friend_id FROM friendship WHERE user_id = ?" , {
+            const response = await db.query("SELECT * FROM friendships WHERE user_id = ?" , {
                 replacements : [ user_id],
                 type: db.QueryTypes.SELECT, // Ensures the query type is SELECT
             })

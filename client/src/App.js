@@ -9,6 +9,7 @@ import DailyMarkPage from './pages/daily-mark';
 import QuitDateComponent from './components/quit-date';
 import SetGoalsComponent from './components/set-goals';
 import CheckProgressComponent from './components/check-progress';
+import FriendshipComponent from './components/friendship';
 function App() {
   return (
 <Router>
@@ -20,6 +21,7 @@ function App() {
           <Route path="/quit-date" element={< QuitDateComponent />} />
           <Route path="/set-goal" element={< SetGoalsComponent />} />
           <Route path="/check-progress" element={< CheckProgressComponent />} />
+          <Route path="/friendship" element={< FriendshipComponent />} />
           <Route path="/daily-mark" element={< DailyMarkPage />} />
           <Route path="/stats" element={< StatsPage />} />
           <Route path="/story" element={< StoryPage />} />
