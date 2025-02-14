@@ -5,6 +5,7 @@ import RegisterPage from './pages/register';
 import StatsPage from './pages/stats';
 import AchievementPage from './pages/achievement';
 import StoryPage from './pages/story';
+import GroupPage from './pages/group';
 import DailyMarkPage from './pages/daily-mark';
 import QuitDateComponent from './components/quit-date';
 import SetGoalsComponent from './components/set-goals';
@@ -26,6 +27,7 @@ function App() {
           <Route path="/stats" element={< StatsPage />} />
           <Route path="/story" element={< StoryPage />} />
           <Route path="/achievement" element={< AchievementPage />} />
+          <Route path="/group" element={< GroupPage />} />
         </Routes>
       </div>
     </Router>

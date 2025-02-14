@@ -4,6 +4,7 @@ import DailyMarkReducer from './redux/slices/daily-mark-slice';
 import SuccessReducer from './redux/slices/success-slice';
 import StoryReducer from './redux/slices/story-slice';
 import FriendshipReducer from './redux/slices/friendship-slice';
+import GroupReducer from './redux/slices/group-slice';
 
 const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
     dailyMarks : DailyMarkReducer,
     success: SuccessReducer,
     story : StoryReducer,
-    friendship : FriendshipReducer
+    friendship : FriendshipReducer,
+    group : GroupReducer
   },
 });
 
