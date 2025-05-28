@@ -5,7 +5,7 @@ Users can log their quit date, set a goal, earn achievements by staying smoke-fr
 
 ---
 
-## 🚀 Features
+## 🚀 Features 
 
 - 🔐 **User Authentication** (Register/Login) using JWT
 - 📅 Track smoke-free days from the selected quit date
